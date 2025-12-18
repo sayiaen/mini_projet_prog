@@ -1,5 +1,5 @@
 package Classes
 
-class Game {
+class Level {
 
 }

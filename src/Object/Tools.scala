@@ -1,5 +1,0 @@
-package Object
-
-object Tools {
-
-}
