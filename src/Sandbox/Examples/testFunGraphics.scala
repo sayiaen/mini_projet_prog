@@ -30,6 +30,7 @@ object JeuClavier extends App {
       if (e.getKeyCode == KeyEvent.VK_DOWN) directionBas = false
       if(e.getKeyCode == KeyEvent.VK_LEFT) directionGauche = false
       if(e.getKeyCode == KeyEvent.VK_RIGHT) directionDroite = false
+
     }
   })
 
