@@ -2,10 +2,9 @@
 
 object Main extends App {
 
-  val display = new Display
+  val snakeDisplay = new SnakeDisplay
 
   while(true) {
-
 
 
 
