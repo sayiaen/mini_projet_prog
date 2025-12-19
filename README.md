@@ -1,6 +1,6 @@
 #PROJET JEU
 
-On va partir sur le jeu de Hockey 
+On va partir sur le jeu de Snake
 
 #Contact
 
