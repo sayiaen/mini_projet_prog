@@ -5,7 +5,7 @@ import java.awt.event.{KeyAdapter, KeyEvent}
 import java.awt.Color
 
 object JeuClavier extends App {
-  val display = new FunGraphics(400, 400, "Contrôle Fluide")
+  val display = new FunGraphics(400, 400, "test fungraphics")
 
   // Variables d'état pour les directions
   var directionHaut = false
@@ -21,7 +21,6 @@ object JeuClavier extends App {
       if (e.getKeyCode == KeyEvent.VK_UP) directionHaut = true
       if (e.getKeyCode == KeyEvent.VK_DOWN) directionBas = true
       if(e.getKeyCode == KeyEvent.VK_LEFT) directionGauche = true
-      if (e.getKeyCode == KeyEvent.VK_LEFT) directionGauche = true
       if (e.getKeyCode == KeyEvent.VK_RIGHT) directionDroite = true
     }
 
