@@ -13,7 +13,7 @@ class Grid {
   def printGrid: Unit = {
     for(x <- 0 until SIZE) {
       for(y <- 0 until SIZE) {
-            print(grid(x)(y).cellType.toString)
+            print(grid(x)(y).cellType.toString + " ")
       }
       println()
     }

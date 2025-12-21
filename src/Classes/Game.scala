@@ -9,10 +9,9 @@ class Game {
   val LOGIC_SPEED: Int = 200 // temps du jeu en milliseconde
 
   // Variables d'état pour les directions
-  var goingUp = false
-  var goingDown = false
-  var goingLeft = false
-  var goingRight = false
+  var direction: Int = 0
+  var speed: Int = 1
+  var command: Int = 0
   var posX = 20
   var posY = 20
 
@@ -21,18 +20,44 @@ class Game {
   grid.printGrid
     while(true) {
       if(spd.checkTick()) {
-        if(disp.keyInput.isUpPressed) posY -= 1
-        if(disp.keyInput.isDownPressed) posY += 1
-        if(disp.keyInput.isLeftPressed) posX -= 1
-        if(disp.keyInput.isRightPressed) posX += 1
+        moveSnake()
 
-        grid.setCell(posX,posY , 'T')
       }
       disp.refresh
 
   }
 
+    def commandSnake(): Int = {
+      if (disp.keyInput.isUpPressed) direction = 1
+      if (disp.keyInput.isDownPressed) direction = 3
+      if (disp.keyInput.isLeftPressed) direction = 4
+      if (disp.keyInput.isRightPressed) direction = 2
+      direction
+    }
+
+    def nextDirection(): Int = {
+      var nextDirection = commandSnake()
+      if(Math.abs(nextDirection - direction) == 2) nextDirection = direction
+      nextDirection
+    }
+
+    def moveSnake(): Unit = {
+      direction = nextDirection()
+      direction match {
+        case 1 =>
+        case 2 =>
+        case 3 =>
+        case 4 =>
+        case _ => None
+      }
+
+      grid.setCell(posX, nexY, 'T')
+
+  }
+
 }
+
+
 
 class GameSpeed(val LOGIC_SPEED: Int) {
 
@@ -46,3 +71,9 @@ class GameSpeed(val LOGIC_SPEED: Int) {
     else false
   }
 }
+
+
+//        if(disp.keyInput.isUpPressed) posY -= 1
+//        if(disp.keyInput.isDownPressed) posY += 1
+//        if(disp.keyInput.isLeftPressed) posX -= 1
+//        if(disp.keyInput.isRightPressed) posX += 1
