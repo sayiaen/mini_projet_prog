@@ -9,8 +9,9 @@ class Game {
   val LOGIC_SPEED: Int = 200 // temps du jeu en milliseconde
 
   // Variables d'état pour les directions
-  var direction: Int = 0
+  var direction: Int = 1
   var speed: Int = 1
+  var length = 3
   var command: Int = 0
   var posX = 20
   var posY = 20
@@ -21,7 +22,7 @@ class Game {
     while(true) {
       if(spd.checkTick()) {
         moveSnake()
-
+        grid.updateGrid()
       }
       disp.refresh
 
@@ -42,16 +43,16 @@ class Game {
     }
 
     def moveSnake(): Unit = {
+      grid.setCell(posX, posY, 'O', length)
       direction = nextDirection()
       direction match {
-        case 1 =>
-        case 2 =>
-        case 3 =>
-        case 4 =>
+        case 1 => posY = posY - speed
+        case 2 => posX = posX + speed
+        case 3 => posY = posY + speed
+        case 4 => posX = posX - speed
         case _ => None
       }
-
-      grid.setCell(posX, nexY, 'T')
+      grid.setCell(posX, posY, 'T')
 
   }
 
