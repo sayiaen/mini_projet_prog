@@ -12,6 +12,11 @@ class Display(var grid: Grid) {
 
   //Variables
 
+  def refresh = {
+    render()
+    fg.syncGameLogic(20)
+  }
+
 
   def render(): Unit = {
     fg.clear()
