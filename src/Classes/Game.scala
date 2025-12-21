@@ -13,14 +13,21 @@ class Game {
   var goingDown = false
   var goingLeft = false
   var goingRight = false
-  var posX = 200
-  var posY = 200
+  var posX = 20
+  var posY = 20
 
 
 
   grid.printGrid
     while(true) {
-      if(spd.checkTick()) println("Salut")
+      if(spd.checkTick()) {
+        if(disp.keyInput.isUpPressed) posY -= 1
+        if(disp.keyInput.isDownPressed) posY += 1
+        if(disp.keyInput.isLeftPressed) posX -= 1
+        if(disp.keyInput.isRightPressed) posX += 1
+
+        grid.setCell(posX,posY , 'T')
+      }
       disp.refresh
 
   }
