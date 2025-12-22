@@ -1,5 +1,8 @@
-import Classes.{Grid, Snake}
-import Object.Tools.random
+import Classes.Grid
+import Classes.Cell
+import Classes.Snake
+import Utils.SnakeFile
+import Utils.Tools.random
 
 class Game {
 
@@ -7,11 +10,23 @@ class Game {
   val grid = new Grid()
   val disp = new Display(grid)
   val spd = new GameSpeed(150)
-  val snake = new Snake(grid, random(0, grid.SIZE), random(0, grid.SIZE), random(1, 4), 2)
+  grid.grid = grid.loadGrid("level")
+
+  var x = -1
+  var y = -1
+  var found: Boolean = false
+  while (!found) {
+    x = random(0, grid.SIZE)
+    y = random(0, grid.SIZE)
+    if (grid.getCell(x, y).cellType == '_') found = true
+  }
+
+  val snake = new Snake(grid, x, y, random(1, 4), 2)
   var inputNextDirection = snake.direction
 
   initLevel()
 
+  SnakeFile.writeFile("src/Levels", "level2", grid.saveGrid())
 
 
   while (true) {

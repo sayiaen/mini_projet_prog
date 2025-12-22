@@ -1,8 +1,11 @@
+package Utils
+
+
 import scala.io.Source
 import java.io.{FileOutputStream, PrintWriter}
 
 
-object File {
+object SnakeFile {
   def readFile(path: String): Option[Array[String]] = {
     try {
       val file = Source.fromFile(path)
