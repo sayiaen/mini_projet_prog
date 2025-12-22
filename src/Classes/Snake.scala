@@ -1,7 +1,8 @@
 package Classes
 
-class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20, var direction: Int = 1,  var speed: Int = 1,  var length: Int = 1) {
+class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20, var direction: Int = 1,  var length: Int = 1) {
   var isAlive: Boolean = true
+  grid.setCell(posX, posY, 'T')
 
   def commandSnake(inputNextDirection: Int): Int = {
     var directionChanged: Boolean = false
@@ -23,10 +24,10 @@ class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20, var directio
 
     nextDirection(inputNextDirection) match {
 
-      case 1 => nextPosX = nextPosX - speed
-      case 2 => nextPosY = nextPosY + speed
-      case 3 => nextPosX = nextPosX + speed
-      case 4 => nextPosY = nextPosY - speed
+      case 1 => nextPosX = nextPosX - 1
+      case 2 => nextPosY = nextPosY + 1
+      case 3 => nextPosX = nextPosX + 1
+      case 4 => nextPosY = nextPosY - 1
       case _ => None
     }
     if (nextPosX < 0) nextPosX = grid.SIZE - 1
@@ -43,20 +44,19 @@ class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20, var directio
   }
 
   def die: Unit = {
-      println("Tu as touché ton corps")
+      println("RIP")
       isAlive = false
     }
 
     def moveToNextPos(nextX: Int, nextY: Int, nextDir: Int): Unit = {
-      val ttl = length / speed
+      val ttl = length
       grid.setCell(posX, posY, 'O', ttl)
       grid.setCell(nextX, nextY, 'T')
       direction = nextDirection(nextDir)
       posX = nextX
       posY = nextY
     }
-
-
+    
 }
 
 
