@@ -8,6 +8,7 @@ class Keyboard(val fg: FunGraphics) {
   var isLeftPressed: Boolean = false
   var isRightPressed: Boolean = false
   var isUpPressed: Boolean = false
+  var isSpacePressed: Boolean = false
 
   fg.setKeyManager(new KeyAdapter() {
     override def keyPressed(e: KeyEvent): Unit = {
@@ -16,6 +17,7 @@ class Keyboard(val fg: FunGraphics) {
         case KeyEvent.VK_S | KeyEvent.VK_DOWN => isDownPressed = true
         case KeyEvent.VK_W | KeyEvent.VK_UP => isUpPressed = true
         case KeyEvent.VK_D | KeyEvent.VK_RIGHT=> isRightPressed = true
+        case KeyEvent.VK_SPACE => isSpacePressed = true
         case _ => None
       }
     }
@@ -26,6 +28,7 @@ class Keyboard(val fg: FunGraphics) {
         case KeyEvent.VK_S | KeyEvent.VK_DOWN => isDownPressed = false
         case KeyEvent.VK_W | KeyEvent.VK_UP => isUpPressed = false
         case KeyEvent.VK_D | KeyEvent.VK_RIGHT=> isRightPressed = false
+        case KeyEvent.VK_SPACE => isSpacePressed = false
         case _ => None
       }
     }

@@ -9,6 +9,7 @@ class Game {
   val LOGIC_SPEED: Int = 200 // temps du jeu en milliseconde
 
   // Variables d'état pour les directions
+  var isAlive: Boolean = true
   var direction: Int = 1
   var speed: Int = 1
   var length = 3
@@ -20,20 +21,30 @@ class Game {
 
   grid.printGrid
     while(true) {
+
       if(spd.checkTick()) {
-        moveSnake()
         grid.updateGrid()
+        if(disp.keyInput.isSpacePressed) length += 1
+        if(isAlive) moveSnake() else   grid.end()
+
       }
       disp.refresh
 
+
   }
 
+  //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
     def commandSnake(): Int = {
-      if (disp.keyInput.isUpPressed) direction = 1
-      if (disp.keyInput.isDownPressed) direction = 3
-      if (disp.keyInput.isLeftPressed) direction = 4
-      if (disp.keyInput.isRightPressed) direction = 2
-      direction
+      var outCommand: Int = direction
+      var directionChanged: Boolean = false
+      if (disp.keyInput.isUpPressed) outCommand = 1
+      if (disp.keyInput.isDownPressed) outCommand = 3
+      if (disp.keyInput.isLeftPressed) outCommand = 4
+      if (disp.keyInput.isRightPressed) outCommand = 2
+      if(outCommand != direction) directionChanged = true
+      if (directionChanged) outCommand
+      else direction
     }
 
     def nextDirection(): Int = {
@@ -44,16 +55,31 @@ class Game {
 
     def moveSnake(): Unit = {
       grid.setCell(posX, posY, 'O', length)
-      direction = nextDirection()
-      direction match {
-        case 1 => posY = posY - speed
-        case 2 => posX = posX + speed
-        case 3 => posY = posY + speed
-        case 4 => posX = posX - speed
+        nextDirection() match {
+        case 1 => posX = posX - speed
+        case 2 => posY = posY + speed
+        case 3 => posX = posX + speed
+        case 4 => posY = posY - speed
         case _ => None
       }
-      grid.setCell(posX, posY, 'T')
+      if(posX < 0) posX = grid.SIZE-1
+      if(posX >= grid.SIZE) posX = 0
+      if (posY < 0) posY = grid.SIZE-1
+      if (posY >= grid.SIZE) posY = 0
 
+      grid.getCell(posX, posY).cellType match {
+        case 'O' => isAlive = false; println("Tu as touché ton corps")
+        case 'F' => length += 1; println("Tu as mangé une pomme")
+        case  _ => None
+      }
+      if(isAlive) {
+        grid.setCell(posX, posY, 'T')
+        direction = nextDirection()
+      }
+      else {
+          speed = 0
+          println("Tu es mort")
+      }
   }
 
 }
