@@ -1,15 +1,15 @@
 package Classes
 
 class Grid {
-  val SIZE = 40
-  val CELL_SIZE = 20
+  val SIZE: Int = 40
+  val CELL_SIZE: Int = 20
   var grid: Array[Array[Cell]] = Array.fill(SIZE, SIZE)(new Cell)
 //  this.setCell(20,21,'T')
 //  this.setCell(20, 22, 'O', 2)
 //  this.setCell(20, 23, 'O', 2)
 //  this.setCell(20, 23, 'O', 2)
 //  this.setCell(20, 23, 'O', 2)
-  this.setCell(10, 10, 'F', 2)
+
 
   def setCell(row: Int, col: Int, cellType: Char, ttl: Int = -1) = {
     grid(row)(col).cellType = cellType

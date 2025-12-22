@@ -1,12 +1,13 @@
 import Classes.{Grid, Snake}
+import Object.Tools.random
 
 class Game {
-
   val grid = new Grid()
   val disp = new Display(grid)
   val spd = new GameSpeed(150)
-  val snake = new Snake(grid)
+  val snake = new Snake(grid, random(0, grid.SIZE), random(0, grid.SIZE), random(1,4))
 
+  grid.setCell(random(0, grid.SIZE), random(0, grid.SIZE), 'F')
 
   // Variables d'état pour les directions
   var command: Int = 0
@@ -37,19 +38,25 @@ class Game {
 
   def checkCollision(pos: (Int, Int, Int)): Unit = {
     grid.getCell(pos._1, pos._2).cellType match {
-      case 'O' => snake.isAlive = false; println("Tu as touché ton corps")
-      case 'F' => snake.length += 1; println("Tu as mangé une pomme")
+      case 'O' => snake.die
+      case 'F' => foodEaten()
       case _ => None
     }
     if (snake.isAlive) {
       grid.setCell(pos._1, pos._2, 'T')
       snake.direction = snake.nextDirection(pos._3)
     }
-    else {
-      snake.speed = 0
-      println("Tu es mort")
-    }
   }
+
+  def foodEaten() = {
+    snake.grow(1)
+    grid.setCell(random(0, grid.SIZE-1), random(0, grid.SIZE), 'F')
+
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------------------------------
+
+
 
 
   class GameSpeed(val LOGIC_SPEED: Int = 200) {

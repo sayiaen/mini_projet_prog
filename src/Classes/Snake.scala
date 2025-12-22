@@ -1,9 +1,9 @@
 package Classes
 
-class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20) {
+class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20, var direction: Int = 1,  var speed: Int = 1) {
   var isAlive: Boolean = true
-  var direction: Int = 1
-  var speed: Int = 1
+
+
   var length = 3
 
   def commandSnake(inputNextDirection: Int): Int = {
@@ -37,11 +37,13 @@ class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20) {
     }
 
   def grow(qty: Int): Unit = {
+    println("Tu as mangé une pomme")
     length += qty
   }
 
-  def die(): Unit =
+  def die: Unit =
     {
+      println("Tu as touché ton corps")
       isAlive = false
     }
 
