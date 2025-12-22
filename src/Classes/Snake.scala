@@ -1,10 +1,7 @@
 package Classes
 
-class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20, var direction: Int = 1,  var speed: Int = 1) {
+class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20, var direction: Int = 1,  var speed: Int = 1,  var length: Int = 1) {
   var isAlive: Boolean = true
-
-
-  var length = 3
 
   def commandSnake(inputNextDirection: Int): Int = {
     var directionChanged: Boolean = false
@@ -20,20 +17,24 @@ class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20, var directio
   }
 
   def move(inputNextDirection: Int = direction): (Int, Int, Int) = {
-    grid.setCell(posX, posY, 'O', length)
+    var nextPosX: Int = posX
+    var nextPosY: Int = posY
+//   grid.setCell(posX, posY, 'O', ttl)
+
     nextDirection(inputNextDirection) match {
-      case 1 => posX = posX - speed
-      case 2 => posY = posY + speed
-      case 3 => posX = posX + speed
-      case 4 => posY = posY - speed
+
+      case 1 => nextPosX = nextPosX - speed
+      case 2 => nextPosY = nextPosY + speed
+      case 3 => nextPosX = nextPosX + speed
+      case 4 => nextPosY = nextPosY - speed
       case _ => None
     }
-    if (posX < 0) posX = grid.SIZE - 1
-    if (posX >= grid.SIZE) posX = 0
-    if (posY < 0) posY = grid.SIZE - 1
-    if (posY >= grid.SIZE) posY = 0
+    if (nextPosX < 0) nextPosX = grid.SIZE - 1
+    if (nextPosX >= grid.SIZE) nextPosX = 0
+    if (nextPosY < 0) nextPosY = grid.SIZE - 1
+    if (nextPosY >= grid.SIZE) nextPosY = 0
 
-    (posX, posY, inputNextDirection)
+    (nextPosX, nextPosY, inputNextDirection)
     }
 
   def grow(qty: Int): Unit = {
@@ -41,11 +42,21 @@ class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20, var directio
     length += qty
   }
 
-  def die: Unit =
-    {
+  def die: Unit = {
       println("Tu as touché ton corps")
       isAlive = false
     }
 
-  }
+    def moveToNextPos(nextX: Int, nextY: Int, nextDir: Int): Unit = {
+      val ttl = length / speed
+      grid.setCell(posX, posY, 'O', ttl)
+      grid.setCell(nextX, nextY, 'T')
+      direction = nextDirection(nextDir)
+      posX = nextX
+      posY = nextY
+    }
+
+
+}
+
 
