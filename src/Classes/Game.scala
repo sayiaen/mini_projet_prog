@@ -10,23 +10,15 @@ class Game {
   val grid = new Grid()
   val disp = new Display(grid)
   val spd = new GameSpeed(150)
+  var score: Int = 0
   grid.grid = grid.loadGrid("level")
-
-  var x = -1
-  var y = -1
-  var found: Boolean = false
-  while (!found) {
-    x = random(0, grid.SIZE)
-    y = random(0, grid.SIZE)
-    if (grid.getCell(x, y).cellType == '_') found = true
-  }
-
-  val snake = new Snake(grid, x, y, random(1, 4), 2)
+  val initCoord: (Int, Int) = findPlace()
+  val snake = new Snake(grid, initCoord._1, initCoord._2, random(1, 4), 2)
   var inputNextDirection = snake.direction
 
   initLevel()
 
-  SnakeFile.writeFile("src/Levels", "level2", grid.saveGrid())
+  SnakeFile.writeFile("src/Levels", "level2", grid.saveGrid()) //sauvegarde le niveau
 
 
   while (true) {
@@ -42,7 +34,8 @@ class Game {
   //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def initLevel(): Unit = {
-    grid.setCell(random(0, grid.SIZE), random(0, grid.SIZE), 'F')
+
+    placeFood()
     for (i <- 0 until 20) {
       var x = -1
       var y = -1
@@ -62,8 +55,8 @@ def initLevel(): Unit = {
   def checkInput() = {
     inputNextDirection = inputDirection()
     if (disp.keyInput.isSpacePressed) snake.length += 1
-    if (disp.keyInput.isEPressed) spd.LOGIC_SPEED -= 10
-    if (disp.keyInput.isQPressed) spd.LOGIC_SPEED += 10
+    if (disp.keyInput.isEPressed) spd.snakeSpeed -= 10
+    if (disp.keyInput.isQPressed) spd.snakeSpeed += 10
   }
 
   def inputDirection(): Int = {
@@ -86,21 +79,39 @@ def initLevel(): Unit = {
 
   def foodEaten() = {
     snake.grow(1)
-    grid.setCell(random(0, grid.SIZE-1), random(0, grid.SIZE), 'F')
+    score += 1
+    println(s"Score $score")
+    placeFood()
 
   }
 
   //-----------------------------------------------------------------------------------------------------------------------------------------
 
+  private def placeFood(): Unit = {
+    val coord: (Int, Int) = findPlace()
+    grid.setCell(coord._1, coord._2, 'F')
+  }
+
+  def findPlace(): (Int, Int) = {
+    var x = -1
+    var y = -1
+    var found: Boolean = false
+    while (!found) {
+      x = random(0, grid.SIZE)
+      y = random(0, grid.SIZE)
+      if (grid.getCell(x, y).cellType == '_') found = true
+    }
+    (x, y)
+  }
 
 
 
-  class GameSpeed(var LOGIC_SPEED: Int = 200) {
+  class GameSpeed(var snakeSpeed: Int = 200) {
 
     var lastTime = System.currentTimeMillis()
 
     def checkTick(): Boolean = {
-      if (System.currentTimeMillis() - lastTime > LOGIC_SPEED) {
+      if (System.currentTimeMillis() - lastTime > snakeSpeed) {
         lastTime = System.currentTimeMillis()
         true
       }
