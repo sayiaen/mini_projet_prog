@@ -7,7 +7,7 @@ class Grid {
   this.setCell(20,21,'T')
 
   def setCell(x: Int, y: Int, cellType: Char) = {
-    grid(y)(x).cellType = cellType
+    grid(x)(y).cellType = cellType
   }
 
   def printGrid: Unit = {

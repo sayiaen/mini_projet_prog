@@ -1,6 +1,8 @@
 package Classes
 
+import scala.collection.mutable.Queue
 class Snake() {
+
   var isAlive: Boolean = true
   var length: Int = 10
   var speedX: Int = 1

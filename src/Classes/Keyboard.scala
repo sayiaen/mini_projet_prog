@@ -16,7 +16,7 @@ class Keyboard(val fg: FunGraphics) {
         case KeyEvent.VK_S | KeyEvent.VK_DOWN => isDownPressed = true
         case KeyEvent.VK_W | KeyEvent.VK_UP => isUpPressed = true
         case KeyEvent.VK_D | KeyEvent.VK_RIGHT=> isRightPressed = true
-        case _ => None
+        case _ => ()
       }
     }
 
@@ -26,7 +26,7 @@ class Keyboard(val fg: FunGraphics) {
         case KeyEvent.VK_S | KeyEvent.VK_DOWN => isDownPressed = false
         case KeyEvent.VK_W | KeyEvent.VK_UP => isUpPressed = false
         case KeyEvent.VK_D | KeyEvent.VK_RIGHT=> isRightPressed = false
-        case _ => None
+        case _ => ()
       }
     }
   })
