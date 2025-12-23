@@ -19,21 +19,23 @@ class Game {
   initLevel()
 
   SnakeFile.writeFile("src/Levels", "level2", grid.saveGrid()) //sauvegarde le niveau
-
-
-  while (true) {
-    checkInput()
-    if (spd.checkTick()) {
-      if (snake.isAlive) checkCollision(snake.move(inputNextDirection)) else grid.end()
-      grid.updateGrid()
-    }
-    disp.refresh
-
-  }
+  
 
   //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-def initLevel(): Unit = {
+def run(): Unit = {
+    while (true) {
+      checkInput()
+      if (spd.checkTick()) {
+        if (snake.isAlive) checkCollision(snake.move(inputNextDirection)) else grid.end()
+        grid.updateGrid()
+      }
+      disp.refresh
+
+    }
+  }
+
+  def initLevel(): Unit = {
 
     placeFood()
     for (i <- 0 until 20) {
