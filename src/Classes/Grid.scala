@@ -12,9 +12,10 @@ class Grid() {
 //  this.setCell(20, 23, 'O', 2)
 
 
-  def setCell(row: Int, col: Int, cellType: Char, ttl: Int = -1) = {
+  def setCell(row: Int, col: Int, cellType: Char, ttl: Int = -1, direction: Int = -1) = {
     grid(row)(col).cellType = cellType
     grid(row)(col).ttl = ttl
+    grid(row)(col).direction = direction
 
   }
 

@@ -30,8 +30,7 @@ def run(): Unit = {
         if (snake.isAlive) checkCollision(snake.move(inputNextDirection)) else grid.end()
         grid.updateGrid()
       }
-      disp.refresh
-
+      disp.refresh()
     }
   }
 

@@ -6,17 +6,26 @@ import java.awt.Color
 
 class Display(var grid: Grid) {
   //Constantes
-  private val HEIGHT = 1600
+  private val HEIGHT = 1800
   private val WIDTH = 1600
   val fg = new FunGraphics(WIDTH, HEIGHT)
   val keyInput = new Keyboard(fg)
 
-  val headImg: SnakeImage = new SnakeImage("/Ressources/head.png", grid.CELL_SIZE)
+  val head_downImg: SnakeImage = new SnakeImage("/Ressources/head_down.png", grid.CELL_SIZE)
+  val head_upImg: SnakeImage = new SnakeImage("/Ressources/head_up.png", grid.CELL_SIZE)
+  val head_leftImg: SnakeImage = new SnakeImage("/Ressources/head_left.png", grid.CELL_SIZE)
+  val head_rightImg: SnakeImage = new SnakeImage("/Ressources/head_right.png", grid.CELL_SIZE)
   val wallImg: SnakeImage = new SnakeImage("/Ressources/wall.jpg", grid.CELL_SIZE)
-  val bgImg: SnakeImage = SnakeImage("/Ressources/bg.jpg", grid.CELL_SIZE)
-  val foodImg: SnakeImage = SnakeImage("/Ressources/food.png", grid.CELL_SIZE)
-  val bodyImg: SnakeImage = SnakeImage("/Ressources/body.png", grid.CELL_SIZE)
+  val bgImg: SnakeImage = new SnakeImage("/Ressources/bg.jpg", grid.CELL_SIZE)
+  val foodImg: SnakeImage = new SnakeImage("/Ressources/food.png", grid.CELL_SIZE)
+  val bodyImg: SnakeImage = new SnakeImage("/Ressources/body.jpeg", grid.CELL_SIZE)
 
+
+  def displayOverlay(score: Int) = {
+    fg.drawString(80, 1700, s"Score $score", Color.black, 72)
+
+
+  }
 
 
   def cellToColor(cell: Cell): Color = {
@@ -34,7 +43,13 @@ class Display(var grid: Grid) {
 
   def cellToImage(cell: Cell): SnakeImage = {
     cell.cellType match {
-      case 'T' => headImg
+      case 'T' => cell.direction match {
+        case 1 => head_upImg
+        case 2 => head_rightImg
+        case 3 => head_downImg
+        case 4 => head_leftImg
+        case _ => head_upImg
+      }
       case 'O' => bodyImg
       case 'F' => foodImg
       case '#' => wallImg
@@ -44,22 +59,23 @@ class Display(var grid: Grid) {
 
   }
 
-  def refresh = {
-//    renderColor()
-    renderImage()
+  def refresh(score: Int) = {
+   // renderColor()
+   renderImage()
+    displayOverlay(score)
     fg.syncGameLogic(60)
   }
 
 
   def renderColor(): Unit = {
-    fg.clear()
+
     for (x <- 0 until grid.SIZE; y <- 0 until grid.SIZE) {
       drawGridColor(x, y, cellToColor(grid.getCell(x, y)))
     }
   }
 
   def renderImage(): Unit = {
-    fg.clear()
+
     for (x <- 0 until grid.SIZE; y <- 0 until grid.SIZE) {
       drawGridImage(x, y, cellToImage(grid.getCell(x, y)))
     }

@@ -6,7 +6,7 @@ object ImageAnimation extends App {
   val fg = new FunGraphics(300, 300, "With thread", true)
 
   // Image doit être dans le dossier /src/res/
-  val bm = new GraphicsBitmap("/Ressources/head.png")
+  val bm = new GraphicsBitmap("/Ressources/head_down.png")
 
   val scale = 0.25
   var angle = 0.1

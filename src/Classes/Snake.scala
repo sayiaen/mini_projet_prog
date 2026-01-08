@@ -16,11 +16,10 @@ class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20, var directio
     if (Math.abs(nextDirection - direction) == 2) nextDirection = direction
     nextDirection
   }
-
+//Appele par la classe Game dans la boucle
   def move(inputNextDirection: Int = direction): (Int, Int, Int) = {
     var nextPosX: Int = posX
     var nextPosY: Int = posY
-//   grid.setCell(posX, posY, 'O', ttl)
 
     nextDirection(inputNextDirection) match {
 
@@ -47,12 +46,13 @@ class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20, var directio
       println("RIP")
       isAlive = false
     }
-
+//Appeler par la classe Game
     def moveToNextPos(nextX: Int, nextY: Int, nextDir: Int): Unit = {
       val ttl = length
-      grid.setCell(posX, posY, 'O', ttl)
-      grid.setCell(nextX, nextY, 'T')
       direction = nextDirection(nextDir)
+      grid.setCell(posX, posY, 'O', ttl)
+      grid.setCell(nextX, nextY, 'T', -1, direction)
+
       posX = nextX
       posY = nextY
     }

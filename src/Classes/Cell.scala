@@ -1,7 +1,7 @@
 package Classes
 import java.awt.Color
 
-class Cell(var cellType: Char = '_', var ttl: Int = -1) {
+class Cell(var cellType: Char = '_', var ttl: Int = -1, var direction: Int = -1) {
   
 
   def updateTTL() =  {
