@@ -2,11 +2,11 @@ import hevs.graphics.FunGraphics
 import hevs.graphics.utils.GraphicsBitmap
 import java.awt.Color
 
-object ImageExample extends App {
+object ImageAnimation extends App {
   val fg = new FunGraphics(300, 300, "With thread", true)
 
   // Image doit être dans le dossier /src/res/
-  val bm = new GraphicsBitmap("/res/pngtree-snake-illustration-png-image_11743292.png")
+  val bm = new GraphicsBitmap("/Ressources/head.png")
 
   val scale = 0.25
   var angle = 0.1

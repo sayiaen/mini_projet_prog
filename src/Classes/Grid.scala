@@ -3,7 +3,7 @@ import Utils.SnakeFile
 
 class Grid() {
   val SIZE: Int = 40
-  val CELL_SIZE: Int = 20
+  val CELL_SIZE: Int = 40
   var grid: Array[Array[Cell]] = Array.fill(SIZE, SIZE)(new Cell)
 //  this.setCell(20,21,'T')
 //  this.setCell(20, 22, 'O', 2)

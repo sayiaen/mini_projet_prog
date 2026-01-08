@@ -38,18 +38,8 @@ def run(): Unit = {
   def initLevel(): Unit = {
 
     placeFood()
-    for (i <- 0 until 20) {
-      var x = -1
-      var y = -1
-      var found: Boolean = false
-      while (!found) {
-        x = random(0, grid.SIZE)
-        y = random(0, grid.SIZE)
-        if(grid.getCell(x, y).cellType == '_') found = true
-      }
+    placeRandomWall()
 
-      grid.setCell(x, y, '#')
-    }
   grid.printGrid
   }
 
@@ -85,6 +75,21 @@ def run(): Unit = {
     println(s"Score $score")
     placeFood()
 
+  }
+
+  def placeRandomWall() = {
+    for (i <- 0 until 20) {
+      var x = -1
+      var y = -1
+      var found: Boolean = false
+      while (!found) {
+        x = random(0, grid.SIZE)
+        y = random(0, grid.SIZE)
+        if (grid.getCell(x, y).cellType == '_') found = true
+      }
+
+      grid.setCell(x, y, '#')
+    }
   }
 
   //-----------------------------------------------------------------------------------------------------------------------------------------
