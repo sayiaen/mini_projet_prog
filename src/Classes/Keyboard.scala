@@ -11,6 +11,7 @@ class Keyboard(val fg: FunGraphics) {
   var isSpacePressed: Boolean = false
   var isQPressed: Boolean = false
   var isEPressed: Boolean = false
+  var isEnterPressed: Boolean = false
 
   
 
@@ -23,6 +24,7 @@ class Keyboard(val fg: FunGraphics) {
         case KeyEvent.VK_D | KeyEvent.VK_RIGHT=> isRightPressed = true
         case KeyEvent.VK_Q => isQPressed = true
         case KeyEvent.VK_E => isEPressed = true
+        case KeyEvent.VK_ENTER => isEnterPressed = true
         case KeyEvent.VK_SPACE => isSpacePressed = true
         
         
@@ -39,6 +41,7 @@ class Keyboard(val fg: FunGraphics) {
         case KeyEvent.VK_Q => isQPressed = false
         case KeyEvent.VK_E => isEPressed = false
         case KeyEvent.VK_SPACE => isSpacePressed = false
+        case KeyEvent.VK_ENTER => isEnterPressed = false
         case _ => None
       }
     }

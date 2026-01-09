@@ -15,13 +15,17 @@ class Display(var grid: Grid) {
   val head_upImg: SnakeImage = new SnakeImage("/Ressources/head_up.png", grid.CELL_SIZE)
   val head_leftImg: SnakeImage = new SnakeImage("/Ressources/head_left.png", grid.CELL_SIZE)
   val head_rightImg: SnakeImage = new SnakeImage("/Ressources/head_right.png", grid.CELL_SIZE)
-  val wallImg: SnakeImage = new SnakeImage("/Ressources/wall.jpg", grid.CELL_SIZE)
-  val bgImg: SnakeImage = new SnakeImage("/Ressources/bg.jpg", grid.CELL_SIZE)
+  val wallImg: SnakeImage = new SnakeImage("/Ressources/wall.png", grid.CELL_SIZE)
+  val bgImg: SnakeImage = new SnakeImage("/Ressources/bg.png", grid.CELL_SIZE)
   val foodImg: SnakeImage = new SnakeImage("/Ressources/food.png", grid.CELL_SIZE)
   val bodyImg: SnakeImage = new SnakeImage("/Ressources/body.jpeg", grid.CELL_SIZE)
 
 
   def displayOverlay(score: Int) = {
+    fg.setColor(Color.white)
+    fg.drawFillRect(0, 1600, 1800, 200)
+//    fg.setColor(Color.white)
+//    fg.drawFillRect(70, 1620, 400, 100)
     fg.drawString(80, 1700, s"Score $score", Color.black, 72)
 
 
@@ -59,13 +63,26 @@ class Display(var grid: Grid) {
 
   }
 
-  def refresh(score: Int) = {
+  def drawGame(score: Int) = {
    // renderColor()
    renderImage()
     displayOverlay(score)
-    fg.syncGameLogic(60)
+
   }
 
+  def drawMenu = {
+    fg.setColor(Color.white)
+    fg.drawFillRect(0, 0, WIDTH, HEIGHT)
+    fg.drawString(80, 1700, s"Appuyer enter pour continuer", Color.black, 72)
+
+  }
+
+  def drawGameOver = {
+    fg.setColor(Color.white)
+    fg.drawFillRect(0, 0, WIDTH, HEIGHT)
+    fg.drawString(80, 1700, s"Tu as perdu", Color.black, 72)
+
+  }
 
   def renderColor(): Unit = {
 
@@ -75,10 +92,10 @@ class Display(var grid: Grid) {
   }
 
   def renderImage(): Unit = {
-
     for (x <- 0 until grid.SIZE; y <- 0 until grid.SIZE) {
       drawGridImage(x, y, cellToImage(grid.getCell(x, y)))
     }
+
   }
 
   def drawGridColor(x: Int, y: Int, c: Color) = {

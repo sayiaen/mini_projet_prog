@@ -4,38 +4,83 @@ import Classes.Snake
 import Utils.SnakeFile
 import Utils.Tools.random
 
+
 class Game {
 
   // Variables
+  var state: String = "menu"
+
   val grid = new Grid()
   val disp = new Display(grid)
-  val spd = new GameSpeed(150)
+  var spd: GameSpeed = _
   var score: Int = 0
-  grid.grid = grid.loadGrid("level")
-  val initCoord: (Int, Int) = findPlace()
-  val snake = new Snake(grid, initCoord._1, initCoord._2, random(1, 4), 2)
-  var inputNextDirection = snake.direction
+  var initCoord: (Int, Int) = _
+  var snake: Snake = _
+  var inputNextDirection: Int = _
 
-  initLevel()
 
-  SnakeFile.writeFile("src/Levels", "level2", grid.saveGrid()) //sauvegarde le niveau
   
 
   //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def run(): Unit = {
     while (true) {
-      checkInput()
-      if (spd.checkTick()) {
-        if (snake.isAlive) checkCollision(snake.move(inputNextDirection)) else grid.end()
-        grid.updateGrid()
+      state match {
+        case "menu" =>
+          updateMenu()
+          disp.drawMenu
+        case "playing" =>
+          updateGame()
+          disp.drawGame(score)
+        case "gameover" =>
+          updateGameOver()
+          disp.drawGameOver
+
       }
-      disp.refresh()
+      disp.fg.syncGameLogic(60)
     }
   }
 
-  def initLevel(): Unit = {
+  private def updateGameOver() = {
+    if(disp.keyInput.isEnterPressed) {
+      initGame("level1")
+      SnakeFile.writeFile("src/Levels", "last_level", grid.saveGrid()) //sauvegarde le niveau
+      state = "playing"
+    }
 
+  }
+
+  private def updateMenu(): Unit = {
+
+    if(disp.keyInput.isEnterPressed) {
+      initGame("level1")
+      SnakeFile.writeFile("src/Levels", "last_level", grid.saveGrid()) //sauvegarde le niveau
+      state = "playing"
+    }
+  }
+
+  private def updateGame(): Unit = {
+    checkInput()
+    if (spd.checkTick()) {
+      if (snake.isAlive) checkCollision(snake.move(inputNextDirection)) else {
+        grid.end()
+        Thread.sleep(100)
+        state = "gameover"
+      }
+      grid.updateGrid()
+    }
+
+  }
+
+
+  def initGame(level: String): Unit = {
+    spd = new GameSpeed(150)
+    score = 0
+    initCoord = findPlace()
+    snake = new Snake(grid, initCoord._1, initCoord._2, random(1, 4), 2)
+    inputNextDirection = snake.direction
+
+    grid.grid = grid.loadGrid(level)
     placeFood()
     placeRandomWall()
 
