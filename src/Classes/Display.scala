@@ -8,7 +8,7 @@ class Display(var grid: Grid) {
   //Constantes
   private val HEIGHT = 1800
   private val WIDTH = 1600
-  val fg = new FunGraphics(WIDTH, HEIGHT)
+  val fg = new FunGraphics(WIDTH, HEIGHT,0,-2000,"Snake", true)
   val keyInput = new Keyboard(fg)
 
   val head_downImg: SnakeImage = new SnakeImage("/Ressources/head_down.png", grid.CELL_SIZE)
@@ -93,6 +93,7 @@ class Display(var grid: Grid) {
 
   def renderImage(): Unit = {
     for (x <- 0 until grid.SIZE; y <- 0 until grid.SIZE) {
+      drawGridImage(x, y, bgImg)
       drawGridImage(x, y, cellToImage(grid.getCell(x, y)))
     }
 

@@ -43,9 +43,8 @@ def run(): Unit = {
 
   private def updateGameOver() = {
     if(disp.keyInput.isEnterPressed) {
-      initGame("level1")
-      SnakeFile.writeFile("src/Levels", "last_level", grid.saveGrid()) //sauvegarde le niveau
-      state = "playing"
+      state = "menu"
+      Thread.sleep(300)
     }
 
   }
@@ -76,15 +75,15 @@ def run(): Unit = {
   def initGame(level: String): Unit = {
     spd = new GameSpeed(150)
     score = 0
+    grid.grid = grid.loadGrid(level)
     initCoord = findPlace()
     snake = new Snake(grid, initCoord._1, initCoord._2, random(1, 4), 2)
     inputNextDirection = snake.direction
 
-    grid.grid = grid.loadGrid(level)
+
     placeFood()
     placeRandomWall()
-
-  grid.printGrid
+    grid.printGrid
   }
 
 
