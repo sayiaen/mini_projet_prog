@@ -8,8 +8,9 @@ class Display(var grid: Grid) {
   //Constantes
   private val HEIGHT = 1800
   private val WIDTH = 1600
-  val fg = new FunGraphics(WIDTH, HEIGHT,0,-2000,"Snake", true)
+  val fg = new FunGraphics(WIDTH, HEIGHT,0,0,"Snake", true)
   val keyInput = new Keyboard(fg)
+  val mouse = new Mouse(fg)
 
   val head_downImg: SnakeImage = new SnakeImage("/Ressources/head_down.png", grid.CELL_SIZE)
   val head_upImg: SnakeImage = new SnakeImage("/Ressources/head_up.png", grid.CELL_SIZE)
@@ -19,6 +20,10 @@ class Display(var grid: Grid) {
   val bgImg: SnakeImage = new SnakeImage("/Ressources/bg.png", grid.CELL_SIZE)
   val foodImg: SnakeImage = new SnakeImage("/Ressources/food.png", grid.CELL_SIZE)
   val bodyImg: SnakeImage = new SnakeImage("/Ressources/body.jpeg", grid.CELL_SIZE)
+  val menu_gameover: SnakeImage = new SnakeImage("/Ressources/menu_gameover.png")
+  val menu_screen: SnakeImage = new SnakeImage("/Ressources/menu_screen.png")
+
+
 
 
   def displayOverlay(score: Int) = {
@@ -71,16 +76,30 @@ class Display(var grid: Grid) {
   }
 
   def drawMenu = {
-    fg.setColor(Color.white)
-    fg.drawFillRect(0, 0, WIDTH, HEIGHT)
-    fg.drawString(80, 1700, s"Appuyer enter pour continuer", Color.black, 72)
-
+fg.frontBuffer.synchronized {
+  menu_screen.place(fg)
+//  fg.setColor(Color.white)
+//  fg.drawFillRect(0, 0, WIDTH, HEIGHT)
+//  fg.drawString(80, 1700, s"Appuyer enter pour continuer", Color.black, 72)
+}
   }
 
   def drawGameOver = {
-    fg.setColor(Color.white)
-    fg.drawFillRect(0, 0, WIDTH, HEIGHT)
-    fg.drawString(80, 1700, s"Tu as perdu", Color.black, 72)
+    fg.frontBuffer.synchronized {
+//      fg.setColor(Color.white)
+//      fg.drawFillRect(0, 0, WIDTH, HEIGHT)
+//      fg.drawString(80, 1700, s"Tu as perdu", Color.black, 72)
+      menu_gameover.place(fg)
+    }
+
+  }
+
+  def drawSettings = {
+    fg.frontBuffer.synchronized {
+
+
+    }
+
 
   }
 

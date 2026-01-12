@@ -17,42 +17,52 @@ class Game {
   var initCoord: (Int, Int) = _
   var snake: Snake = _
   var inputNextDirection: Int = _
+  var level: String = "level1"
 
 
-  
+  val btnJouer: Button = new Button(494, 1021, 1099, 1197, "Jouer")
+  val btnReJouer: Button = new Button(819, 1317, 1295, 1495, "ReJouer")
+  val btnMenu: Button = new Button(494, 1021, 1099, 1197, "Jouer")
+
+
 
   //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def run(): Unit = {
     while (true) {
-      state match {
-        case "menu" =>
-          updateMenu()
-          disp.drawMenu
-        case "playing" =>
-          updateGame()
-          disp.drawGame(score)
-        case "gameover" =>
-          updateGameOver()
-          disp.drawGameOver
 
-      }
+        state match {
+          case "menu" =>
+            updateMenu()
+            disp.drawMenu
+          case "playing" =>
+            updateGame()
+            disp.drawGame(score)
+          case "gameover" =>
+            updateGameOver()
+            disp.drawGameOver
+          case "settings" =>
+            updateSettings()
+            disp.drawSettings
+        }
+
       disp.fg.syncGameLogic(60)
     }
   }
 
+  private def updateSettings() = ???
+
   private def updateGameOver() = {
-    if(disp.keyInput.isEnterPressed) {
+    if(btnReJouer.isClicked(disp.mouse)) {
       state = "menu"
-      Thread.sleep(300)
     }
 
   }
 
   private def updateMenu(): Unit = {
 
-    if(disp.keyInput.isEnterPressed) {
-      initGame("level1")
+    if(disp.keyInput.isEnterPressed || btnJouer.isClicked(disp.mouse)) {
+      initGame(level)
       SnakeFile.writeFile("src/Levels", "last_level", grid.saveGrid()) //sauvegarde le niveau
       state = "playing"
     }
@@ -63,7 +73,6 @@ def run(): Unit = {
     if (spd.checkTick()) {
       if (snake.isAlive) checkCollision(snake.move(inputNextDirection)) else {
         grid.end()
-        Thread.sleep(100)
         state = "gameover"
       }
       grid.updateGrid()
@@ -73,17 +82,18 @@ def run(): Unit = {
 
 
   def initGame(level: String): Unit = {
+    grid.grid = grid.loadGrid(level)
+    placeFood()
+    placeRandomWall()
     spd = new GameSpeed(150)
     score = 0
-    grid.grid = grid.loadGrid(level)
     initCoord = findPlace()
     snake = new Snake(grid, initCoord._1, initCoord._2, random(1, 4), 2)
     inputNextDirection = snake.direction
 
 
-    placeFood()
-    placeRandomWall()
-    grid.printGrid
+
+  grid.printGrid
   }
 
 
