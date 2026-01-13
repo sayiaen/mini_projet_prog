@@ -21,6 +21,7 @@ class Display(var grid: Grid) {
   val bgImg: SnakeImage = new SnakeImage("/Ressources/bg.png", grid.CELL_SIZE)
   val foodImg: SnakeImage = new SnakeImage("/Ressources/food.png", grid.CELL_SIZE)
   val bodyImg: SnakeImage = new SnakeImage("/Ressources/body.jpeg", grid.CELL_SIZE)
+  val fogImg: SnakeImage = new SnakeImage("/Ressources/fog.png",grid.CELL_SIZE)
   val menu_gameover: SnakeImage = new SnakeImage("/Ressources/menu_gameover.png")
   val menu_screen: SnakeImage = new SnakeImage("/Ressources/menu_screen.png")
   val menu_settings: SnakeImage = new SnakeImage("/Ressources/menu_settings.png")
@@ -54,22 +55,26 @@ class Display(var grid: Grid) {
   }
 
   def cellToImage(cell: Cell): SnakeImage = {
-    cell.cellType match {
-      case 'T' => cell.direction match {
-        case 1 => head_upImg
-        case 2 => head_rightImg
-        case 3 => head_downImg
-        case 4 => head_leftImg
-        case _ => head_upImg
-      }
-      case 'O' => bodyImg
-      case 'F' => foodImg
-      case '#' => wallImg
-      case '?' => boxImg
-      case '_' => bgImg
-      case _ => bgImg
+    cell.visible match {
+      case true =>
+        cell.cellType match {
+          case 'T' => cell.direction match {
+            case 1 => head_upImg
+            case 2 => head_rightImg
+            case 3 => head_downImg
+            case 4 => head_leftImg
+            case _ => head_upImg
+          }
+          case 'O' => bodyImg
+          case 'F' => foodImg
+          case '#' => wallImg
+          case '?' => boxImg
+          case '_' => bgImg
+          case _ => bgImg
+        }
+      case false =>
+        fogImg
     }
-
   }
 
   def drawGame(score: Int) = {

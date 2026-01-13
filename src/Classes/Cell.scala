@@ -1,7 +1,9 @@
 
 
-class Cell(var cellType: Char = '_', var ttl: Int = -1, var direction: Int = -1) {
-  
+class Cell(var cellType: Char = '_', var ttl: Int = -1, var visible: Boolean = true, var direction: Int = -1) {
+
+  def setVisible(): Unit = visible = true
+  def setUnvisible(): Unit = visible = false
 
   def updateTTL() =  {
     if(cellType == 'O') {

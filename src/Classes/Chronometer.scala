@@ -33,7 +33,7 @@ class Chronometer(var initialIntervalle: Int = 200, var unit: String = "millis")
   }
 
   def multiply(factor: Double): Unit = {
-    val minLimit: Long = 40
+    val minLimit: Long = 50
     val diff: Long = intervalle - minLimit
     if(diff > 0) {
 

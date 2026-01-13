@@ -13,7 +13,8 @@ class Grid() {
 //  this.setCell(20, 23, 'O', 2)
 
 
-  def setCell(row: Int, col: Int, cellType: Char, ttl: Int = -1, direction: Int = -1) = {
+  def setCell(row: Int, col: Int,  cellType: Char, visible: Boolean = true, ttl: Int = -1, direction: Int = -1) = {
+    grid(row)(col).visible = visible
     grid(row)(col).cellType = cellType
     grid(row)(col).ttl = ttl
     grid(row)(col).direction = direction
@@ -32,6 +33,30 @@ class Grid() {
   def updateGrid() = {
     for(x <- 0 until SIZE; y <- 0 until SIZE) {
      grid(x)(y).updateTTL()
+    }
+  }
+
+  def allVisible(): Unit = {
+    for(x <- 0 until SIZE; y <- 0 until SIZE) {
+      grid(x)(y).setVisible()
+    }
+  }
+
+  def allUnvisible(): Unit = {
+    for(x <- 0 until SIZE; y <- 0 until SIZE) {
+      grid(x)(y).setUnvisible()
+    }
+  }
+
+  def updateFog(x0: Int, y0: Int, p: Int): Unit = {
+    allUnvisible()
+    var x1: Int = if(x0-p >= 0) x0 - p else 0
+    var y1: Int = if(y0-p >= 0) y0 - p else 0
+    var x2: Int = if(x0+p <= SIZE) x0 + p else SIZE
+    var y2: Int = if(y0+p <= SIZE) y0 + p else SIZE
+
+    for(x <- x1 until x2; y <- y1 until y2) {
+      grid(x)(y).setVisible()
     }
   }
 

@@ -11,18 +11,22 @@ class GameLogic(val disp: Display, val grid: Grid) {
   var initCoord: (Int, Int) = (0, 0)
   var inputNextDirection: Int = _
   var multipyFactor: Double = 1
-  var score: Int = 0
 
+
+  var score: Int = 0
   var spd: Chronometer = new Chronometer(80)
   var difficultyTimer: Chronometer = new Chronometer(1, "sec")
   var snake: Snake = new Snake(grid, initCoord._1, initCoord._2, random(1, 4), 2)
   var boxTimer: Chronometer = new Chronometer(5, "sec")
+  var fog: Fog = new Fog(grid)
+  fog.enable()
 
 
 
   def updateGame(): String = {
     checkInput()
     if (spd.checkTick()) {
+      fog.update(snake.posX, snake.posY)
       if (snake.isAlive) checkCollision(snake.move(inputNextDirection)) else {
         grid.end()
         return "gameover"
@@ -69,7 +73,7 @@ class GameLogic(val disp: Display, val grid: Grid) {
 
     }
 
-
+    fog.disable()
     grid.grid = grid.loadGrid(level)
     food.place()
     placeRandomWall(nbWall)
@@ -81,7 +85,17 @@ class GameLogic(val disp: Display, val grid: Grid) {
     inputNextDirection = snake.direction
     SnakeFile.writeFile("src/Levels", "last_level", grid.saveGrid()) //sauvegarde le niveau
     grid.printGrid
+
   }
+
+
+  def lotOfFood(): Unit = {
+    val foodArray: Array[Food] = Array.fill(random(5, 20))(new Food(grid))
+    for(f <- foodArray) {
+      f.place()
+    }
+  }
+
 
 
   def checkInput() = {
@@ -116,7 +130,7 @@ class GameLogic(val disp: Display, val grid: Grid) {
     }
   }
 
-  def boxEaten() = {
+  def boxEaten(): Unit = {
     box.remove()
     val random = Utils.Tools.random(1,5)
     random match {
@@ -125,15 +139,14 @@ class GameLogic(val disp: Display, val grid: Grid) {
         if(snake.length >= 4) snake.length /= 2
       case 2 =>
         println("BOOST")
-        spd.multiply(0.8)
+        spd.multiply(0.9)
       case 3 =>
-        println("score +3")
-        score += 3
+        println("lot of food")
+        lotOfFood()
       case 4 =>
-        println("score -2")
-        score -= 2
+        println("fog")
+        fog.enable()
       case 5 => snake.length += 5
-
 
     }
 
