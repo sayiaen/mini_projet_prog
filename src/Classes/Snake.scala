@@ -1,4 +1,4 @@
-package Classes
+
 
 class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20, var direction: Int = 1,  var length: Int = 1) {
   var isAlive: Boolean = true
@@ -46,7 +46,7 @@ class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20, var directio
       println("RIP")
       isAlive = false
     }
-//Appeler par la classe Game
+      //Appeler par la classe Game
     def moveToNextPos(nextX: Int, nextY: Int, nextDir: Int): Unit = {
       val ttl = length
       direction = nextDirection(nextDir)
@@ -56,6 +56,15 @@ class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20, var directio
       posX = nextX
       posY = nextY
     }
+
+  def reset(x: Int, y: Int, dir: Int, len: Int): Unit = {
+    isAlive = true
+     posX= x
+    posY = y
+    direction= dir
+    length= len
+
+  }
     
 }
 

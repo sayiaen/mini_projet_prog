@@ -1,5 +1,6 @@
-package Classes
+
 import Utils.SnakeFile
+import Utils.Tools.random
 
 class Grid() {
   val SIZE: Int = 40
@@ -71,5 +72,18 @@ class Grid() {
       grid(x)(y).cellType = '#'
     }
   }
+
+  def findPlace(): (Int, Int) = {
+    var x = -1
+    var y = -1
+    var found: Boolean = false
+    while (!found) {
+      x = random(0, SIZE)
+      y = random(0, SIZE)
+      if (getCell(x, y).cellType == '_') found = true
+    }
+    (x, y)
+  }
+
 }
 

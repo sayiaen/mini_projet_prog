@@ -1,4 +1,4 @@
-import Classes.{Cell, Grid, SnakeImage}
+
 import hevs.graphics.FunGraphics
 import hevs.graphics.utils.GraphicsBitmap
 
@@ -8,10 +8,11 @@ class Display(var grid: Grid) {
   //Constantes
   private val HEIGHT = 1800
   private val WIDTH = 1600
-  val fg = new FunGraphics(WIDTH, HEIGHT,0,0,"Snake", true)
+  val fg = new FunGraphics(WIDTH, HEIGHT, 0, 0, "Snake", true)
   val keyInput = new Keyboard(fg)
   val mouse = new Mouse(fg)
 
+  val boxImg: SnakeImage = new SnakeImage("/Ressources/mysteryBox.png", grid.CELL_SIZE)
   val head_downImg: SnakeImage = new SnakeImage("/Ressources/head_down.png", grid.CELL_SIZE)
   val head_upImg: SnakeImage = new SnakeImage("/Ressources/head_up.png", grid.CELL_SIZE)
   val head_leftImg: SnakeImage = new SnakeImage("/Ressources/head_left.png", grid.CELL_SIZE)
@@ -22,17 +23,19 @@ class Display(var grid: Grid) {
   val bodyImg: SnakeImage = new SnakeImage("/Ressources/body.jpeg", grid.CELL_SIZE)
   val menu_gameover: SnakeImage = new SnakeImage("/Ressources/menu_gameover.png")
   val menu_screen: SnakeImage = new SnakeImage("/Ressources/menu_screen.png")
-
-
+  val menu_settings: SnakeImage = new SnakeImage("/Ressources/menu_settings.png")
+  val overlay: SnakeImage = new SnakeImage("/Ressources/overlay.png")
 
 
   def displayOverlay(score: Int) = {
-    fg.setColor(Color.white)
-    fg.drawFillRect(0, 1600, 1800, 200)
-//    fg.setColor(Color.white)
-//    fg.drawFillRect(70, 1620, 400, 100)
-    fg.drawString(80, 1700, s"Score $score", Color.black, 72)
-
+    fg.frontBuffer.synchronized {
+      fg.setColor(Color.white)
+      fg.drawFillRect(0, 1600, 1800, 200)
+      overlay.place(fg, 800, 1700)
+      //    fg.setColor(Color.white)
+      //    fg.drawFillRect(70, 1620, 400, 100)
+      fg.drawString(277, 1750, s"$score", Color.white, 64)
+    }
 
   }
 
@@ -62,6 +65,7 @@ class Display(var grid: Grid) {
       case 'O' => bodyImg
       case 'F' => foodImg
       case '#' => wallImg
+      case '?' => boxImg
       case '_' => bgImg
       case _ => bgImg
     }
@@ -69,34 +73,35 @@ class Display(var grid: Grid) {
   }
 
   def drawGame(score: Int) = {
-   // renderColor()
-   renderImage()
+    // renderColor()
+    renderImage()
     displayOverlay(score)
 
   }
 
   def drawMenu = {
-fg.frontBuffer.synchronized {
-  menu_screen.place(fg)
-//  fg.setColor(Color.white)
-//  fg.drawFillRect(0, 0, WIDTH, HEIGHT)
-//  fg.drawString(80, 1700, s"Appuyer enter pour continuer", Color.black, 72)
-}
+    fg.frontBuffer.synchronized {
+      menu_screen.place(fg)
+      //  fg.setColor(Color.white)
+      //  fg.drawFillRect(0, 0, WIDTH, HEIGHT)
+      //  fg.drawString(80, 1700, s"Appuyer enter pour continuer", Color.black, 72)
+    }
   }
 
-  def drawGameOver = {
+  def drawGameOver(score: Int) = {
     fg.frontBuffer.synchronized {
-//      fg.setColor(Color.white)
-//      fg.drawFillRect(0, 0, WIDTH, HEIGHT)
-//      fg.drawString(80, 1700, s"Tu as perdu", Color.black, 72)
+      //      fg.setColor(Color.white)
+      //      fg.drawFillRect(0, 0, WIDTH, HEIGHT)
+      //      fg.drawString(80, 1700, s"Tu as perdu", Color.black, 72)
       menu_gameover.place(fg)
+      fg.drawString(800, 996, s"$score", Color.white, 72)
     }
 
   }
 
   def drawSettings = {
     fg.frontBuffer.synchronized {
-
+      menu_settings.place(fg)
 
     }
 
