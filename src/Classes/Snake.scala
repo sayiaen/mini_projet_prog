@@ -57,6 +57,8 @@ class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20, var directio
       posY = nextY
     }
 
+
+
   def reset(x: Int, y: Int, dir: Int, len: Int): Unit = {
     isAlive = true
      posX= x

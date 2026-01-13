@@ -1,7 +1,9 @@
 
 
-import Utils.SnakeFile
+import Utils.{SnakeFile, Tools}
 import Utils.Tools.random
+
+import scala.concurrent.duration.Duration
 
 class GameLogic(val disp: Display, val grid: Grid) {
 
@@ -16,9 +18,12 @@ class GameLogic(val disp: Display, val grid: Grid) {
   var score: Int = 0
   var spd: Chronometer = new Chronometer(80)
   var difficultyTimer: Chronometer = new Chronometer(1, "sec")
+  var boostTimer: Chronometer = new Chronometer(10, "sec")
   var snake: Snake = new Snake(grid, initCoord._1, initCoord._2, random(1, 4), 2)
   var boxTimer: Chronometer = new Chronometer(5, "sec")
   var fog: Fog = new Fog(grid)
+  var boostEnabled: Boolean = false
+  var speed: Long = spd.intervalle
   fog.enable()
 
 
@@ -34,6 +39,7 @@ class GameLogic(val disp: Display, val grid: Grid) {
       grid.updateGrid()
     }
 
+    if(boostTimer.checkTick() && boostEnabled) disableBoost()
     if (difficultyTimer.checkTick()) manageSpeed()
     if(boxTimer.checkRandomTick(5,10)) manageBox()
 
@@ -43,7 +49,6 @@ class GameLogic(val disp: Display, val grid: Grid) {
 
   def manageSpeed(): Unit = {
     spd.multiply(multipyFactor)
-    println("augmentation vitesse")
 
   }
 
@@ -73,9 +78,10 @@ class GameLogic(val disp: Display, val grid: Grid) {
 
     }
 
-    fog.disable()
     grid.grid = grid.loadGrid(level)
     food.place()
+    fog.disable()
+    disableBoost()
     placeRandomWall(nbWall)
     spd.reset(150)
     difficultyTimer.reset(1)
@@ -100,7 +106,7 @@ class GameLogic(val disp: Display, val grid: Grid) {
 
   def checkInput() = {
     inputNextDirection = inputDirection()
-    if (disp.keyInput.isSpacePressed) snake.length += 1
+    if (disp.keyInput.isSpacePressed) enableBoost(10)
     if (disp.keyInput.isEPressed)     spd.multiply(0.95)
     if (disp.keyInput.isQPressed)     spd.multiply(1.05)
   }
@@ -138,18 +144,32 @@ class GameLogic(val disp: Display, val grid: Grid) {
         println("length / 2")
         if(snake.length >= 4) snake.length /= 2
       case 2 =>
-        println("BOOST")
-        spd.multiply(0.9)
+        enableBoost(Tools.random(5,15))
       case 3 =>
         println("lot of food")
         lotOfFood()
       case 4 =>
         println("fog")
-        fog.enable()
+        fog.enable(Tools.random(10, 20),Tools.random(5, 15))
       case 5 => snake.length += 5
 
     }
 
+  }
+  def enableBoost(duration: Int) = {
+    if (!boostEnabled) {
+      speed = spd.intervalle
+      spd.intervalle = 20
+      boostEnabled = true
+    }
+    boostTimer.reset(duration)
+    println("BOOST ENABLED")
+  }
+
+  def disableBoost() = {
+    boostEnabled = false
+    spd.intervalle = speed
+    println("END OF BOOST")
   }
 
   def foodEaten() = {
