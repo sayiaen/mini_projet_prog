@@ -105,7 +105,6 @@ class Display(var grid: Grid) {
 
     }
 
-
   }
 
   def renderColor(): Unit = {

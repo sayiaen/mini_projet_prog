@@ -5,8 +5,10 @@ class UIManager(val disp: Display) {
 
   //Boutton dans l'affichage
   val menu_btnJouer: Button = new Button(494, 1021, 1099, 1197, "Jouer")
-  val gameover_btnRejouer: Button = new Button(819, 1317, 1295, 1495, "ReJouer")
+  val gameover_btnMenu: Button = new Button(819, 1317, 1295, 1495, "Menu")
+  val gameover_btnRejoouer: Button = new Button(298, 1320, 776, 1495, "Rejouer")
   val set_btnMenu: Button = new Button(525, 1434, 1075, 1561, "Jouer")
+
   val menu_btnSettings: Button = new Button(498, 1252, 1106, 1416, "Jouer")
   val set_level1: Button = new Button(488, 465, 1102, 558, "level1")
   val set_level2: Button = new Button(488, 587, 1102, 674, "level2")
@@ -19,7 +21,7 @@ class UIManager(val disp: Display) {
 
   var state: String = "settings"
   var level: String = "level1"
-  var difficulty: String = "easy"
+  var difficulty: String = "medium"
 
   def updateSettings(): String = {
 
@@ -69,8 +71,11 @@ class UIManager(val disp: Display) {
   }
 
   def updateGameOver():String = {
-      if (gameover_btnRejouer.isClicked(disp.mouse)) {
+      if (gameover_btnMenu.isClicked(disp.mouse)) {
       return "menu"
+    }
+    if (gameover_btnRejoouer.isClicked(disp.mouse)) {
+      return "playing"
     }
     "gameover"
   }

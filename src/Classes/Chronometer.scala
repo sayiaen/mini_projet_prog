@@ -2,8 +2,8 @@
 
 class Chronometer(var initialIntervalle: Int = 200, var unit: String = "millis") {
 
-  var initTime = System.currentTimeMillis()
-  var lastTime = System.currentTimeMillis()
+  var initTime = now()
+  var lastTime = now()
   var intervalle: Long = toMillis(initialIntervalle)
 
   private def now(): Long = System.currentTimeMillis()
@@ -29,6 +29,18 @@ class Chronometer(var initialIntervalle: Int = 200, var unit: String = "millis")
 
   def change(x: Int): Unit = {
     intervalle += toMillis(x)
+
+  }
+
+  def multiply(factor: Double): Unit = {
+    val minLimit: Long = 40
+    val diff: Long = intervalle - minLimit
+    if(diff > 0) {
+
+      intervalle = minLimit + (diff * factor).toLong
+    }
+    else
+      intervalle = minLimit
 
   }
 

@@ -5,17 +5,18 @@ import Utils.Tools.random
 
 class GameLogic(val disp: Display, val grid: Grid) {
 
-  var spd: Chronometer = new Chronometer(150)
-  var difficultyTimer: Chronometer = new Chronometer(1, "sec")
-  var boxTimer: Chronometer = new Chronometer(5, "sec")
-
-
-  var score: Int = 0
-  var initCoord: (Int, Int) = (0, 0)
-  var snake: Snake = new Snake(grid, initCoord._1, initCoord._2, random(1, 4), 2)
-  var inputNextDirection: Int = _
   val food: Food = new Food(grid)
   val box: MysteryBox = new MysteryBox(grid)
+
+  var initCoord: (Int, Int) = (0, 0)
+  var inputNextDirection: Int = _
+  var multipyFactor: Double = 1
+  var score: Int = 0
+
+  var spd: Chronometer = new Chronometer(80)
+  var difficultyTimer: Chronometer = new Chronometer(1, "sec")
+  var snake: Snake = new Snake(grid, initCoord._1, initCoord._2, random(1, 4), 2)
+  var boxTimer: Chronometer = new Chronometer(5, "sec")
 
 
 
@@ -37,7 +38,7 @@ class GameLogic(val disp: Display, val grid: Grid) {
   }
 
   def manageSpeed(): Unit = {
-    spd.change(-10)
+    spd.multiply(multipyFactor)
     println("augmentation vitesse")
 
   }
@@ -58,10 +59,13 @@ class GameLogic(val disp: Display, val grid: Grid) {
     difficulty match {
       case   "easy" =>
       nbWall = random(0,5)
+        multipyFactor = 0.99
       case "medium" =>
       nbWall = random(5,15)
+        multipyFactor = 0.98
       case "hard" =>
     nbWall = random(15,30)
+        multipyFactor = 0.97
 
     }
 
@@ -70,7 +74,7 @@ class GameLogic(val disp: Display, val grid: Grid) {
     food.place()
     placeRandomWall(nbWall)
     spd.reset(150)
-    difficultyTimer.reset(10)
+    difficultyTimer.reset(1)
     score = 0
     initCoord = grid.findPlace()
     snake.reset(initCoord._1, initCoord._2, random(1, 4), 2)
@@ -83,8 +87,8 @@ class GameLogic(val disp: Display, val grid: Grid) {
   def checkInput() = {
     inputNextDirection = inputDirection()
     if (disp.keyInput.isSpacePressed) snake.length += 1
-    if (disp.keyInput.isEPressed) spd.change(-10)
-    if (disp.keyInput.isQPressed) spd.change(10)
+    if (disp.keyInput.isEPressed)     spd.multiply(0.95)
+    if (disp.keyInput.isQPressed)     spd.multiply(1.05)
   }
 
   def inputDirection(): Int = {
@@ -121,7 +125,7 @@ class GameLogic(val disp: Display, val grid: Grid) {
         if(snake.length >= 4) snake.length /= 2
       case 2 =>
         println("BOOST")
-        spd.change(-10)
+        spd.multiply(0.8)
       case 3 =>
         println("score +3")
         score += 3

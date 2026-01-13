@@ -26,9 +26,11 @@ class Game {
         case "gameover" =>
           state = ui.updateGameOver()
           disp.drawGameOver(logic.score)
+          if (state == "playing") logic.initGame(ui.level, ui.difficulty)
         case "settings" =>
           state = ui.updateSettings()
           disp.drawSettings
+
         case _ => null
       }
 

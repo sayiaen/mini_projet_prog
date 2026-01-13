@@ -6,4 +6,4 @@ object Main extends App {
   game.run()
 
 
-  }
+}
