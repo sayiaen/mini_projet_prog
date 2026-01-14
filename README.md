@@ -1,6 +1,6 @@
 # SNAKE
 
-Welcome to Snake. A little game made with 
+Welcome to Snake. A little game made in Scala with the FunGraphics Library
 
 
 ## About the Project
@@ -37,3 +37,7 @@ Use the WASD key to change the direction of the Snake
 
 Antoine Auugsburger
 Eren Sayinta
+
+## License
+
+Free to use. Enjoy !
