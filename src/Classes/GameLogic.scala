@@ -1,6 +1,6 @@
 //Cette classe permet de gérer la logique du jeu
 
-import Utils.SnakeFile
+import Utils.{SnakeFile, Tools}
 import Utils.Tools.random
 
 class GameLogic(val disp: Display, val grid: Grid) {
@@ -144,7 +144,7 @@ class GameLogic(val disp: Display, val grid: Grid) {
     random match {
       case 1 =>
         println("length / 2")
-        score /= 2
+        score -= Tools.random(1,3)
         if(snake.length >= 4) snake.length /= 2
       case 2 =>
         println("BOOST")
@@ -157,7 +157,7 @@ class GameLogic(val disp: Display, val grid: Grid) {
         fog.enable()
       case 5 =>
         println("length increase")
-        snake.length += 5
+        snake.length += Tools.random(2,8)
 
     }
 

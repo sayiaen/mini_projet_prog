@@ -11,7 +11,7 @@ class Display(var grid: Grid) {
   //Constantes
   private val HEIGHT = 1800
   private val WIDTH = 1600
-  val fg = new FunGraphics(WIDTH, HEIGHT, 0, 0, "Snake", true)
+  val fg = new FunGraphics(WIDTH, HEIGHT, 0, -2000, "Snake", true)
   val keyInput = new Keyboard(fg)
   val mouse = new Mouse(fg)
 
