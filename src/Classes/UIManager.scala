@@ -1,5 +1,6 @@
+// Cette classe permet de gérer la logique des différents menus
 
-import Utils.SnakeFile
+
 
 class UIManager(val disp: Display) {
 
@@ -19,7 +20,6 @@ class UIManager(val disp: Display) {
   val set_moyen: Button = new Button(476, 1071, 894, 1172, "moyen")
   val set_difficile: Button = new Button(476, 1071, 1130, 1172, "difficile")
 
-  var state: String = "settings"
   var level: String = "level1"
   var difficulty: String = "medium"
 

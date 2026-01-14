@@ -1,4 +1,4 @@
-
+// Cette classe permet de gérer le snake
 
 class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20, var direction: Int = 1,  var length: Int = 1) {
   var isAlive: Boolean = true

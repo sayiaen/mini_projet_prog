@@ -1,3 +1,6 @@
+//Cette classe permet de gérer la souris
+
+
 import hevs.graphics.FunGraphics
 import java.awt.event.{MouseAdapter, MouseEvent}
 

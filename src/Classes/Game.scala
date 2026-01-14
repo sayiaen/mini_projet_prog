@@ -3,7 +3,7 @@
 class Game {
 
   // Variables
-  var state: String = "menu"
+  var state: String = "menu" //Variable pour gérer les états du jeu
 
   val grid = new Grid()
   val disp = new Display(grid)
@@ -34,7 +34,7 @@ class Game {
         case _ => null
       }
 
-      disp.fg.syncGameLogic(60)
+      disp.fg.syncGameLogic(60) //Taux de rafraichissement 60 Hz
     }
   }
 

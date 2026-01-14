@@ -1,3 +1,5 @@
+// Cette classe permet de gérer la grille qui contient les différentes valeurs du jeu
+
 
 import Utils.SnakeFile
 import Utils.Tools.random

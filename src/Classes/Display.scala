@@ -1,3 +1,6 @@
+//Cette classe permet de gérer l'affichage
+
+
 
 import hevs.graphics.FunGraphics
 import hevs.graphics.utils.GraphicsBitmap
@@ -30,15 +33,13 @@ class Display(var grid: Grid) {
 
   def displayOverlay(score: Int) = {
     fg.frontBuffer.synchronized {
-      fg.setColor(Color.white)
-      fg.drawFillRect(0, 1600, 1800, 200)
       overlay.place(fg, 800, 1700)
       //    fg.setColor(Color.white)
       //    fg.drawFillRect(70, 1620, 400, 100)
       fg.drawString(277, 1750, s"$score", Color.white, 64)
     }
+    }
 
-  }
 
 
   def cellToColor(cell: Cell): Color = {

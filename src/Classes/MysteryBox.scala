@@ -1,4 +1,4 @@
-
+// Cette classe permet de gérer la Mystery Box
 
 
 class MysteryBox(val grid: Grid, var enabled: Boolean = false) {

@@ -1,4 +1,4 @@
-
+//Cette classe permet de gérer la logique du jeu
 
 import Utils.SnakeFile
 import Utils.Tools.random
@@ -22,7 +22,7 @@ class GameLogic(val disp: Display, val grid: Grid) {
   fog.enable()
 
 
-
+//Mise a jour du jeu
   def updateGame(): String = {
     checkInput()
     if (spd.checkTick()) {
@@ -41,20 +41,7 @@ class GameLogic(val disp: Display, val grid: Grid) {
     "playing"
   }
 
-  def manageSpeed(): Unit = {
-    spd.multiply(multipyFactor)
-    println("augmentation vitesse")
-
-  }
-
-  def manageBox(): Unit = {
-    if (box.enabled) {
-      box.remove()
-    }
-    else {
-      box.place()
-    }
-  }
+  //Initalisation des variables avant chaque partie
 
   def initGame(level: String, difficulty: String): Unit = {
 
@@ -62,13 +49,13 @@ class GameLogic(val disp: Display, val grid: Grid) {
 
     difficulty match {
       case   "easy" =>
-      nbWall = random(0,5)
+        nbWall = random(0,5)
         multipyFactor = 0.99
       case "medium" =>
-      nbWall = random(5,15)
+        nbWall = random(5,20)
         multipyFactor = 0.98
       case "hard" =>
-    nbWall = random(15,30)
+        nbWall = random(20,40)
         multipyFactor = 0.97
 
     }
@@ -88,6 +75,24 @@ class GameLogic(val disp: Display, val grid: Grid) {
 
   }
 
+  //permet de gérer la vitesse du jeu avec un facteur
+
+  def manageSpeed(): Unit = {
+    spd.multiply(multipyFactor)
+    println("augmentation vitesse")
+
+  }
+
+  def manageBox(): Unit = {
+    if (box.enabled) {
+      box.remove()
+    }
+    else {
+      box.place()
+    }
+  }
+
+//Bonus qui place beaucoup de nourriture
 
   def lotOfFood(): Unit = {
     val foodArray: Array[Food] = Array.fill(random(5, 20))(new Food(grid))
@@ -130,12 +135,16 @@ class GameLogic(val disp: Display, val grid: Grid) {
     }
   }
 
+
+  //Quand la mystery box est mangé, on tire un bonus ou malus au hasard
+
   def boxEaten(): Unit = {
     box.remove()
     val random = Utils.Tools.random(1,5)
     random match {
       case 1 =>
         println("length / 2")
+        score /= 2
         if(snake.length >= 4) snake.length /= 2
       case 2 =>
         println("BOOST")
@@ -146,11 +155,15 @@ class GameLogic(val disp: Display, val grid: Grid) {
       case 4 =>
         println("fog")
         fog.enable()
-      case 5 => snake.length += 5
+      case 5 =>
+        println("length increase")
+        snake.length += 5
 
     }
 
   }
+
+  //quand la nourriture est mangé
 
   def foodEaten() = {
     food.remove()
@@ -161,6 +174,7 @@ class GameLogic(val disp: Display, val grid: Grid) {
   }
 
 
+  //place des murs aléatoirements
   def placeRandomWall(max: Int = 20) = {
     for (i <- 0 until max) {
       var x = -1

@@ -1,3 +1,5 @@
+// Cette classe permet de gérer le clavier
+
 import hevs.graphics.FunGraphics
 
 import java.awt.event.{KeyAdapter, KeyEvent}

@@ -1,4 +1,4 @@
-
+// Cette classe permet de gérer le temps
 
 class Chronometer(var initialIntervalle: Int = 200, var unit: String = "millis") {
 
