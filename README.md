@@ -33,41 +33,34 @@ Use the WASD key to change the direction of the Snake
 
 We split the project into several classes, grouped into the following categories:
 
-Logic
+1. Logic
+2. Display
+3. Keyboard and Mouse
+5. Utilities
 
-Display
-
-Keyboard and Mouse
-
-Utilities
-
-Game
+## Game
 
 The Game class contains all the functions that connect the game logic with the user interface. It manages the global flow of the game using a state machine.
 
-GameLogic
+## GameLogic
 
 The GameLogic class contains all the functions responsible for running the core logic of the game, independently of the user interface.
 
-Grid
+## Grid
 
 The Grid class represents the game board. It is composed of characters that describe the type of each cell:
 
-_ for an empty cell
+1. '_' for an empty cell
+2. '#' for a wall
+3. 'T' for the snake’s head
+4. 'F' for food
+5. '?' for the mystery box
 
-# for a wall
-
-T for the snake’s head
-
-F for food
-
-? for the mystery box
-
-Chronometer
+## Chronometer
 
 The Chronometer class is responsible for all timing mechanisms in the game, such as the snake’s movement speed, the duration of effects, and the random appearance and disappearance of the mystery box.
 
-Snake
+## Snake
 
 The Snake class is responsible for managing the player. It uses a TTL (Time To Live) mechanism that is decreased after each update. The TTL value is exactly equal to the length of the snake. When the TTL of a cell reaches 0, the cell is converted back into an empty cell.
 
