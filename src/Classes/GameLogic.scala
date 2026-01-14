@@ -83,6 +83,8 @@ class GameLogic(val disp: Display, val grid: Grid) {
 
   }
 
+  //cette fonction permet de gérer si la mystery box est sur la grille
+
   def manageBox(): Unit = {
     if (box.enabled) {
       box.remove()
@@ -101,7 +103,7 @@ class GameLogic(val disp: Display, val grid: Grid) {
     }
   }
 
-
+//cette fonction permet de checker si des touches ont été appuyé ou non
 
   def checkInput() = {
     inputNextDirection = inputDirection()
@@ -118,6 +120,8 @@ class GameLogic(val disp: Display, val grid: Grid) {
     if (disp.keyInput.isRightPressed) outCommand = 2
     outCommand
   }
+
+  //cette fonction permet de gérer les collision avec les différents élements sur la grille
 
   def checkCollision(pos: (Int, Int, Int)): Unit = {
     grid.getCell(pos._1, pos._2).cellType match {

@@ -15,6 +15,8 @@ class Grid() {
 //  this.setCell(20, 23, 'O', 2)
 
 
+  //permet de configuré une cellule spécifique
+
   def setCell(row: Int, col: Int,  cellType: Char, visible: Boolean = true, ttl: Int = -1, direction: Int = -1) = {
     grid(row)(col).visible = visible
     grid(row)(col).cellType = cellType
@@ -22,6 +24,8 @@ class Grid() {
     grid(row)(col).direction = direction
 
   }
+
+  //permet d'afficher la grille de jeu dans la console
 
   def printGrid: Unit = {
     for(x <- 0 until SIZE) {
@@ -32,11 +36,14 @@ class Grid() {
     }
   }
 
+  //permet de mettre a jour la grille
   def updateGrid() = {
     for(x <- 0 until SIZE; y <- 0 until SIZE) {
      grid(x)(y).updateTTL()
     }
   }
+
+  //definit toutes les cellule de la grille comme visible
 
   def allVisible(): Unit = {
     for(x <- 0 until SIZE; y <- 0 until SIZE) {
@@ -44,12 +51,15 @@ class Grid() {
     }
   }
 
+  //definit toutes les cellule de la grille comme invisible
   def allUnvisible(): Unit = {
     for(x <- 0 until SIZE; y <- 0 until SIZE) {
       grid(x)(y).setUnvisible()
     }
   }
 
+
+  //permet de mettre a jour les cellules concerné par le fog
   def updateFog(x0: Int, y0: Int, p: Int): Unit = {
     allUnvisible()
     var x1: Int = if(x0-p >= 0) x0 - p else 0
@@ -75,6 +85,9 @@ class Grid() {
     }
     out
   }
+
+  // permet de charger une grille dans le dossier level
+
 
   def loadGrid(name: String): Array[Array[Cell]] = {
     val out: Array[Array[Cell]]  = Array.fill(SIZE, SIZE)(new Cell())

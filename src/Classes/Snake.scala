@@ -37,16 +37,17 @@ class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20, var directio
     (nextPosX, nextPosY, inputNextDirection)
     }
 
+  //fait grandir le snake de n qty
   def grow(qty: Int): Unit = {
     println("Tu as mangé une pomme")
     length += qty
   }
-
+//quand snake meurt
   def die: Unit = {
       println("RIP")
       isAlive = false
     }
-      //Appeler par la classe Game
+      //Appeler par la classe Game, permet au snake de bouger a la case suivante
     def moveToNextPos(nextX: Int, nextY: Int, nextDir: Int): Unit = {
       val ttl = length
       direction = nextDirection(nextDir)
@@ -57,6 +58,7 @@ class Snake(val grid: Grid, var posX: Int = 20, var posY: Int = 20, var directio
       posY = nextY
     }
 
+  //Reset du snake avant une nouvelle partie
   def reset(x: Int, y: Int, dir: Int, len: Int): Unit = {
     isAlive = true
      posX= x

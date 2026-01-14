@@ -5,12 +5,13 @@ class Game {
   // Variables
   var state: String = "menu" //Variable pour gérer les états du jeu
 
-  val grid = new Grid()
-  val disp = new Display(grid)
+  val grid = new Grid() //creation de la grille du jeu
+  val disp = new Display(grid) //creation de la gestion de l'interface
 
-  val logic = new GameLogic(disp, grid)
-  val ui = new UIManager(disp)
+  val logic = new GameLogic(disp, grid) //creation de la logique de jeu
+  val ui = new UIManager(disp) //creation du manager de user interface
 
+  //cette fonction permet de lancer le jeu et de naviguer entre les différents états
 
   def run(): Unit = {
     while (true) {

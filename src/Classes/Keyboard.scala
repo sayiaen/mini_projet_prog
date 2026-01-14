@@ -6,6 +6,8 @@ import java.awt.event.{KeyAdapter, KeyEvent}
 
 class Keyboard(val fg: FunGraphics) {
 
+  //booolean qui represente l'état des touches configuré
+
   var isDownPressed: Boolean = false
   var isLeftPressed: Boolean = false
   var isRightPressed: Boolean = false
@@ -18,7 +20,7 @@ class Keyboard(val fg: FunGraphics) {
   
 
   fg.setKeyManager(new KeyAdapter() {
-    override def keyPressed(e: KeyEvent): Unit = {
+    override def keyPressed(e: KeyEvent): Unit = { //événement quand une touche est appuyé
       e.getKeyCode match {
         case KeyEvent.VK_A | KeyEvent.VK_LEFT => isLeftPressed = true
         case KeyEvent.VK_S | KeyEvent.VK_DOWN => isDownPressed = true
@@ -34,7 +36,7 @@ class Keyboard(val fg: FunGraphics) {
       }
     }
 
-    override def keyReleased(e: KeyEvent): Unit = {
+    override def keyReleased(e: KeyEvent): Unit = { //événement quand une touche est relaché
       e.getKeyCode match {
         case KeyEvent.VK_A | KeyEvent.VK_LEFT => isLeftPressed = false
         case KeyEvent.VK_S | KeyEvent.VK_DOWN => isDownPressed = false

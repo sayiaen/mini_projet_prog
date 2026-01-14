@@ -4,7 +4,7 @@
 
 class UIManager(val disp: Display) {
 
-  //Boutton dans l'affichage
+  //Zone cliquable dans l'affichage
   val menu_btnJouer: Button = new Button(494, 1021, 1099, 1197, "Jouer")
   val gameover_btnMenu: Button = new Button(819, 1317, 1295, 1495, "Menu")
   val gameover_btnRejoouer: Button = new Button(298, 1320, 776, 1495, "Rejouer")
@@ -22,6 +22,8 @@ class UIManager(val disp: Display) {
 
   var level: String = "level1"
   var difficulty: String = "medium"
+
+  //Les fonctions ci dessous permettent de gérer les interactions dans les différents interfaces
 
   def updateSettings(): String = {
 
@@ -79,6 +81,8 @@ class UIManager(val disp: Display) {
     }
     "gameover"
   }
+
+
 
   def updateMenu(): String = {
 

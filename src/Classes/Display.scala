@@ -15,6 +15,8 @@ class Display(var grid: Grid) {
   val keyInput = new Keyboard(fg)
   val mouse = new Mouse(fg)
 
+  //Import des différentes images
+
   val boxImg: SnakeImage = new SnakeImage("/Ressources/mysteryBox.png", grid.CELL_SIZE)
   val head_downImg: SnakeImage = new SnakeImage("/Ressources/head_down.png", grid.CELL_SIZE)
   val head_upImg: SnakeImage = new SnakeImage("/Ressources/head_up.png", grid.CELL_SIZE)
@@ -30,7 +32,7 @@ class Display(var grid: Grid) {
   val menu_settings: SnakeImage = new SnakeImage("/Ressources/menu_settings.png")
   val overlay: SnakeImage = new SnakeImage("/Ressources/overlay.png")
 
-
+//affiche la bande sous le jeu qui continent le score
   def displayOverlay(score: Int) = {
     fg.frontBuffer.synchronized {
       overlay.place(fg, 800, 1700)
@@ -55,6 +57,8 @@ class Display(var grid: Grid) {
 
   }
 
+  //permet de convertir un éléments de la grille en l'image correspondante
+
   def cellToImage(cell: Cell): SnakeImage = {
     cell.visible match {
       case true =>
@@ -78,6 +82,7 @@ class Display(var grid: Grid) {
     }
   }
 
+  //permet de dessiner le jeu
   def drawGame(score: Int) = {
     // renderColor()
     renderImage()
@@ -120,6 +125,8 @@ class Display(var grid: Grid) {
     }
   }
 
+  //permet de convertir toute la grille en image en itérant chaque cellule
+
   def renderImage(): Unit = {
     for (x <- 0 until grid.SIZE; y <- 0 until grid.SIZE) {
       drawGridImage(x, y, bgImg)
@@ -135,6 +142,8 @@ class Display(var grid: Grid) {
     fg.drawFillRect(posY, posX, grid.CELL_SIZE, grid.CELL_SIZE)
   }
 
+
+  //permet de dessiner une image dans une cellule précise
   def drawGridImage(x: Int, y: Int, img: SnakeImage) = {
     val drawX = y * grid.CELL_SIZE
     val drawY = x * grid.CELL_SIZE

@@ -7,7 +7,7 @@ import java.awt.event.{MouseAdapter, MouseEvent}
 class Mouse(val fg: FunGraphics) {
 
 
-  var hasClicked: Boolean = false
+  var hasClicked: Boolean = false //Boolean qui permet de savoir si la souris a clique
   var posy = 0
   var posx = 0
 
