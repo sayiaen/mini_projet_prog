@@ -1,13 +1,10 @@
-# README
+# SNAKE
 
-Welcome to Snake.
+Welcome to Snake. A little game made with 
 
 
 ## About the Project
 ![GAMEPLAY.png](README_RESSOURCES/GAMEPLAY.png)
-
-## Built With
-We use Scala with the FunGraphics Library to build this game
 
 
 ## Getting Started
@@ -17,7 +14,7 @@ Welcome in the menu, in this interface, you can choose to play or to select the 
 ![SETTINGS.png](README_RESSOURCES/SETTINGS.png)
 
 
-## Functionality
+## Features
 
 1. Change difficulty
 2. Change level
@@ -26,8 +23,12 @@ Welcome in the menu, in this interface, you can choose to play or to select the 
 5. Infinite play
 6. Score calculation
 
+## Usage
 
-## Roadmap
+Use the WASD key to change the direction of the Snake
+
+
+## How It Works
 
 
 
