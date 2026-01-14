@@ -44,8 +44,7 @@ The Game class contains all the functions that connect the game logic with the u
 
 ### GameLogic
 
-The GameLogic class contains all the functions responsible for running the core logic of the game, independently of the user interface.
-
+The GameLogic class contains all the functions responsible for running the core logic of the game, independently of the user interface. It manages the initialization of the game, the different timers, input handling, collision detection, and the application of various effects such as fog and speed boost.
 ### Grid
 
 The Grid class represents the game board. It is composed of characters that describe the type of each cell:
